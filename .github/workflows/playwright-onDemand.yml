@@ -68,7 +68,6 @@ jobs:
                 "Owner" : "${{github.repository_owner}}",
                 "Repo": "${{ github.event.repository.name }}",
                 "Token": "${{ secrets.DASHBOARD_REPORT_PAT }}",
-                "Base" : "main",
                 "ToolLabel" : "Nightly Integration Tests" }'
 
   storeReports:
