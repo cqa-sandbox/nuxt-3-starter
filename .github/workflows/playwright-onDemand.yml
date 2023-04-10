@@ -58,13 +58,14 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - name: Determine failing step
+    - name: Determine if failing step is playwright tests
+      if: ${{needs.test.result.Run-your-tests.outputs.status}} != 'failure'
       run: |
-        if [[ true ]]; then
-            echo "FAILEDREASON='Installing dependencies'" >> "$GITHUB_ENV"
-        else
-            echo "FAILEDREASON='Other Reason'" >> "$GITHUB_ENV"
-        fi 
+        echo "FAILEDREASON='Playwright tests'" >> "$GITHUB_ENV"
+    - name: Determine other step is failing
+      if: ${{needs.test.result.Run-your-tests.outputs.status}} != 'success'
+      run: |
+        echo "FAILEDREASON='Playwright tests'" >> "$GITHUB_ENV"
     - name: Set http web request parameters
       uses: fjogeleit/http-request-action@v1
       with:
