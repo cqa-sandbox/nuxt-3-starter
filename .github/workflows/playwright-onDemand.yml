@@ -22,7 +22,8 @@ jobs:
   test:
     # Runs on an ubuntu runner
     runs-on: ubuntu-latest
-
+    env:
+      LAST_STEP: ""
     strategy:
       matrix:
         node-version: [16.x, 18.x]
@@ -57,6 +58,13 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
+    - name: Determine failing step
+      run: |
+        if [[ true ]]; then
+            echo "FAILEDREASON='Installing dependencies'" >> "$GITHUB_ENV"
+        else
+            echo "FAILEDREASON="Other Reason" >> "$GITHUB_ENV"
+        fi 
     - name: Set http web request parameters
       uses: fjogeleit/http-request-action@v1
       with:
@@ -65,7 +73,7 @@ jobs:
         timeout: 10000
         customHeaders: '{"Content-Type": "application/json"}'
         data: '{
-                "IssueComment": "Creating a test issue from github action",
+                "IssueComment": "Step" + ${{env.FAILEDREASON}} + " failed in github workflow",
                 "Owner" : "${{github.repository_owner}}",
                 "Repo": "${{ github.event.repository.name }}",
                 "Token": "${{ secrets.DASHBOARD_REPORT_PAT }}",
