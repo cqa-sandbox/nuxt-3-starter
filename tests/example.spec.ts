@@ -4,7 +4,6 @@ import { resolve, join } from 'path'
 
 const ROOT_PATH = resolve(__dirname, '..', 'screenshots')
 test('should display the home page', async ({ page }) => {
-    test.slow();
     // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
     await page.goto('/')
     await expect(page).toHaveURL("/")
