@@ -61,10 +61,10 @@ jobs:
       with:
         url: 'https://createprpremium.azurewebsites.net/api/CreateIssue?code=${{ secrets.FUNCTION_KEY }}'
         method: 'POST'
-        timeout: 10000
+        timeout: 15000
         customHeaders: '{"Content-Type": "application/json"}'
         data: '{
-                "IssueComment": "Creating a test issue from github action",
+                "IssueComment": "Playwright tests are failing for this repository",
                 "Owner" : "${{github.repository_owner}}",
                 "Repo": "${{ github.event.repository.name }}",
                 "Token": "${{ secrets.DASHBOARD_REPORT_PAT }}",
