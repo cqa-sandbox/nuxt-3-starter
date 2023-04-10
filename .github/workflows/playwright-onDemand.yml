@@ -74,7 +74,7 @@ jobs:
         timeout: 10000
         customHeaders: '{"Content-Type": "application/json"}'
         data: '{
-                "IssueComment": "Step" + env.FAILEDREASON + " failed in github workflow",
+                "IssueComment": "Failed playwright tests",
                 "Owner" : "${{github.repository_owner}}",
                 "Repo": "${{ github.event.repository.name }}",
                 "Token": "${{ secrets.DASHBOARD_REPORT_PAT }}",
