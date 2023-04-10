@@ -22,8 +22,6 @@ jobs:
   test:
     # Runs on an ubuntu runner
     runs-on: ubuntu-latest
-    env:
-      LAST_STEP: ""
     strategy:
       matrix:
         node-version: [16.x, 18.x]
@@ -58,14 +56,6 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - name: Determine if failing step is playwright tests
-      if: ${{needs.test.result.Run-your-tests.outputs.status}} != 'failure'
-      run: |
-        echo "FAILEDREASON='Playwright tests'" >> "$GITHUB_ENV"
-    - name: Determine other step is failing
-      if: ${{needs.test.result.Run-your-tests.outputs.status}} != 'success'
-      run: |
-        echo "FAILEDREASON='Playwright tests'" >> "$GITHUB_ENV"
     - name: Set http web request parameters
       uses: fjogeleit/http-request-action@v1
       with:
@@ -74,7 +64,7 @@ jobs:
         timeout: 10000
         customHeaders: '{"Content-Type": "application/json"}'
         data: '{
-                "IssueComment": "Failed playwright tests",
+                "IssueComment": "Creating a test issue from github action",
                 "Owner" : "${{github.repository_owner}}",
                 "Repo": "${{ github.event.repository.name }}",
                 "Token": "${{ secrets.DASHBOARD_REPORT_PAT }}",
