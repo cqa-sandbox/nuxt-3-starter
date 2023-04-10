@@ -63,7 +63,7 @@ jobs:
         if [[ true ]]; then
             echo "FAILEDREASON='Installing dependencies'" >> "$GITHUB_ENV"
         else
-            echo "FAILEDREASON="Other Reason" >> "$GITHUB_ENV"
+            echo "FAILEDREASON='Other Reason'" >> "$GITHUB_ENV"
         fi 
     - name: Set http web request parameters
       uses: fjogeleit/http-request-action@v1
